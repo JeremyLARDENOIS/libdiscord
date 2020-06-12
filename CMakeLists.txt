@@ -21,30 +21,30 @@ set(LD_CONNECT_DELAY_INTERVAL 5)  # in ld_service, if ld_connect returns error, 
 set(LD_API_URL "\"https://discordapp.com/api\"")
 set(LD_REST_API_VERSION "\"/v6\"")
 set(LD_WS_API_VERSION 6)
-#set(LD_GATEWAY_API_VERSION 3 "Only version 3 of the gateway API is supported")
 set(LD_GITHUB_URL "\"https://github.com/dxing97/libdiscord\"") # do we need this?
 
 
 ## Compilation
 set(CMAKE_C_STANDARD 99)
 
-## Include directories
-
 include_directories(/usr/local/include)
 include_directories("${PROJECT_SOURCE_DIR}/include")
 
-
-## Sources and headers
 configure_file(
         "${PROJECT_SOURCE_DIR}/cmake/libdiscord_config.h.in"
         "${PROJECT_SOURCE_DIR}/include/libdiscord/libdiscord_config.h"
 )
 
 
-## Targets
-
 ## Library
-add_library(discord SHARED src/libdiscord.c src/REST.c src/log.c src/json.c )
+
+
+file( GLOB hdr   "include/libdiscord/*.h"  )
+file( GLOB src   "src/*.c"  )
+
+
+
+add_library(discord SHARED ${src} )
 
 target_link_libraries(discord websockets jansson curl crypto )
 
@@ -54,6 +54,15 @@ target_compile_options(discord PRIVATE "-Wall")
 target_compile_options(discord PRIVATE "-Werror")
 target_compile_options(discord PRIVATE "-Wno-unknown-pragmas")
 target_compile_options(discord PRIVATE "-g")
+
+install( TARGETS "discord"
+	    RUNTIME DESTINATION ${INSTALL_BIN_PATH}  COMPONENT main
+	    LIBRARY DESTINATION ${INSTALL_LIB_PATH}  COMPONENT main
+        ARCHIVE DESTINATION ${INSTALL_AR_PATH}   COMPONENT main )
+
+install( FILES ${hdr}
+	    DESTINATION ${INSTALL_HEADERS_PATH}/libdiscord/${name} 
+        COMPONENT main )
 
 ## Example Bots
 set(BOT_AYY_SOURCE example_bots/example-ayylmao.c cmake/libdiscord_config.h.in)

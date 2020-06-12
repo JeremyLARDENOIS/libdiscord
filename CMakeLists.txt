@@ -10,9 +10,27 @@ set(CPACK_PACKAGE_NAME libdiscord)
 
 set(LD_VERSION_MAJOR 0)
 set(LD_VERSION_MINOR .3)
-set(LD_VERSION_PATCH )
+set(LD_VERSION_PATCH .0)
 set(LD_VERSION "${LD_VERSION_MAJOR}${LD_VERSION_MINOR}${LD_VERSION_PATCH}")
 
+set( CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} /lib /usr/lib /usr/local/lib )
+set( CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} /usr/include /usr/local/include )
+set( CMAKE_MODULE_PATH  ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake" ) 
+
+set ( INSTALL_BIN_PATH bin )
+set ( INSTALL_LIB_PATH lib )
+set ( INSTALL_AR_PATH  lib )
+set ( INSTALL_HEADERS_PATH include )
+set ( INSTALL_DATASETS_PATH share/cyan/datasets )
+
+# Make relative paths absolute (needed later on)
+
+foreach(p LIB BIN HEADERS AR DATASETS)
+        set(var INSTALL_${p}_PATH)
+        if(NOT IS_ABSOLUTE "${${var}}")
+                set(${var} "${CMAKE_INSTALL_PREFIX}/${${var}}")
+        endif()
+endforeach()
 ## libdiscord options
 set(LD_RINGBUFFER_DEFAULT_SIZE 16)
 set(LD_CONNECT_DELAY_INTERVAL 5)  # in ld_service, if ld_connect returns error, ld_service will block for this amount of time. not so good for event loops with other things happening in the background
@@ -35,14 +53,18 @@ configure_file(
         "${PROJECT_SOURCE_DIR}/include/libdiscord/libdiscord_config.h"
 )
 
+### Cmake file
+
+configure_file(discordConfig.cmake.in "${PROJECT_BINARY_DIR}/discordConfig.cmake" @ONLY)
+
+install ( FILES "${PROJECT_BINARY_DIR}/discordConfig.cmake" 
+      DESTINATION "${INSTALL_LIB_PATH}/cmake/discord" COMPONENT dev )  
 
 ## Library
 
 
 file( GLOB hdr   "include/libdiscord/*.h"  )
 file( GLOB src   "src/*.c"  )
-
-
 
 add_library(discord SHARED ${src} )
 

@@ -6,12 +6,9 @@
 #include <curl/curl.h>
 #include <libwebsockets.h>
 #include <jansson.h>
-//#include <glib.h>
 
-#include "libdiscord_config.h"
-
-#include "log.h"
-//#include "json.h"
+#include "libdiscord/libdiscord_config.h"
+#include "libdiscord/log.h"
 
 /*
  *
@@ -500,7 +497,7 @@ ld_status ld_gateway_queue_heartbeat(struct ld_context *context);
 char *ld_get_os_name();
 
 
-#include "REST.h"
-#include "json.h"
+// #include "libdiscord/REST.h"
+#include "libdiscord/json.h"
 
 #endif

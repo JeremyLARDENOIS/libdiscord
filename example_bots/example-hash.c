@@ -2,7 +2,7 @@
 // Created by dxing97 on 2018-12-14.
 //
 
-#include <libdiscord.h>
+#include <libdiscord/libdiscord.h>
 #include <getopt.h>
 #include <signal.h>
 #include <openssl/evp.h> //openssl EVP crypto API

@@ -2,7 +2,7 @@
 // Created by dxing97 on 1/15/18.
 //
 
-#include "REST.h"
+#include "libdiscord/REST.h"
 
 struct ld_headers * ld_headers_init(struct ld_headers *headers) {
     void *ret1, *ret2;

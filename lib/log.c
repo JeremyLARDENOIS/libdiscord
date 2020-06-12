@@ -2,7 +2,7 @@
 // Created by danielxing.6 on 11/17/2017.
 //
 
-#include "log.h"
+#include "libdiscord/log.h"
 
 /*
  * internal macro used for logging

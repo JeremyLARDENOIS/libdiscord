@@ -1,9 +1,8 @@
 #include <stdlib.h>
 #include <jansson.h>
-//#include "libwebsockets/lib/libwebsockets.h"
 
-#include "libdiscord.h"
-#include "log.h"
+#include "libdiscord/libdiscord.h"
+#include "libdiscord/log.h"
 
 /*
  * libwebsockets protocols struct, parameters set here are used to set the behavior of 

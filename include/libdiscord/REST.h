@@ -9,9 +9,8 @@
 
 #include <curl/curl.h>
 
-//#include <libdiscord.h>
-#include "status.h"
-#include "json.h"
+#include "libdiscord/status.h"
+#include "libdiscord/json.h"
 
 #ifndef LD_SNOWFLAKE
 #define LD_SNOWFLAKE unsigned long long

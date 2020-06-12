@@ -7,11 +7,10 @@
 #define _GNU_SOURCE 1
 #endif
 
-#include <libdiscord.h>
+#include <libdiscord/libdiscord.h>
 #include <jansson.h>
 #include <time.h>
-
-#include "REST.h"
+#include "libdiscord/REST.h"
 
 /*
  *

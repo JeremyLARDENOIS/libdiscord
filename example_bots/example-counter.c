@@ -2,7 +2,7 @@
 // Created by dxing97 on 11/10/18.
 //
 
-#include <libdiscord.h>
+#include <libdiscord/libdiscord.h>
 #include <getopt.h>
 #include <signal.h>
 /*

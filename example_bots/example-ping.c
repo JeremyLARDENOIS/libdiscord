@@ -28,7 +28,7 @@
  *          this means it won't check the latency for intial websocket connections (for now)
  */
  
-#include <libdiscord.h>
+#include <libdiscord/libdiscord.h>
 #include <getopt.h>
 #include <signal.h>
 

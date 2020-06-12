@@ -2,10 +2,14 @@
 // Created by dxing97 on 1/15/18.
 //
 //#include <jansson.h>
-#include "json.h"
-#include "log.h"
-#include <stdio.h>
 
+#define _GNU_SOURCE
+
+#include <stdio.h>
+#include <time.h>
+
+#include "libdiscord/json.h"
+#include "libdiscord/log.h"
 
 
 

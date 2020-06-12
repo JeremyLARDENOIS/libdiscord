@@ -29,68 +29,31 @@ set(LD_GITHUB_URL "\"https://github.com/dxing97/libdiscord\"") # do we need this
 set(CMAKE_C_STANDARD 99)
 
 ## Include directories
-IF (CYGWIN)
-    SET (CMAKE_FIND_LIBRARY_PREFIXES "")
-    SET (CMAKE_FIND_LIBRARY_SUFFIXES ".lib" ".LIB" ".dll" ".DLL")
-ELSE()
-    SET (CMAKE_FIND_LIBRARY_PREFIXES "lib")
-    SET (CMAKE_FIND_LIBRARY_SUFFIXES ".so" ".a")
-ENDIF (CYGWIN)
 
-include_directories(/usr/local/lib /usr/local/include)
-include_directories(example_bots lib cmake)
+include_directories(/usr/local/include)
+include_directories("${PROJECT_SOURCE_DIR}/include")
 
-#homebrew on macOS
-include_directories(/usr/local/opt/curl/include)
-
-include_directories(/usr/local/opt/openssl/include)
-link_directories(/usr/local/opt/openssl/lib)
-
-include_directories(/usr/local/opt/libwebsockets/include)
-link_directories(/usr/local/opt/libwebsockets/lib)
-
-link_directories(/usr/local/opt/jansson/lib)
-
-#include_directories(/usr/local/include/glib-2.0)
-#include_directories(/usr/local/include/glib-2.0/glib)
-
-
-include_directories("${PROJECT_BINARY_DIR}")
-# If libwebsockets was compiled and installed in Cygwin:
-include_directories(/usr/local/lib/include)
-
-#find_library(LCRYPTO openssl)
-#find_package(BZip2)
-#find_package(PkgConfig REQUIRED)
-#pkg_search_module(GLIB REQUIRED glib-2.0)
-#
-#set(LD_INCLUDE_DIRS ${GLIB_INCLUDE_DIRS})
-
-set(LD_LIBS websockets jansson curl crypto ${GLIB_LDFLAGS})
 
 ## Sources and headers
 configure_file(
         "${PROJECT_SOURCE_DIR}/cmake/libdiscord_config.h.in"
-        "${PROJECT_BINARY_DIR}/libdiscord_config.h"
+        "${PROJECT_SOURCE_DIR}/include/libdiscord/libdiscord_config.h"
 )
 
 
-
-
 ## Targets
-## Library
-set(LD_SOURCE lib/libdiscord.h lib/libdiscord.c lib/REST.h lib/REST.c lib/log.c lib/log.h lib/json.c lib/json.h lib/utils.c lib/utils.h lib/status.h)
-add_library(discord SHARED ${LD_SOURCE})
 
-target_include_directories(discord PRIVATE ${LD_INCLUDE_DIRS})
-target_link_libraries(discord ${LD_LIBS})
+## Library
+add_library(discord SHARED lib/libdiscord.c lib/REST.c lib/log.c lib/json.c )
+
+target_link_libraries(discord websockets jansson curl crypto )
+
 set_target_properties(discord PROPERTIES VERSION ${PROJECT_VERSION})
 
 target_compile_options(discord PRIVATE "-Wall")
 target_compile_options(discord PRIVATE "-Werror")
 target_compile_options(discord PRIVATE "-Wno-unknown-pragmas")
 target_compile_options(discord PRIVATE "-g")
-
 
 ## Example Bots
 set(BOT_AYY_SOURCE example_bots/example-ayylmao.c cmake/libdiscord_config.h.in)
@@ -113,7 +76,3 @@ set(BOT_HASH_SOURCE cmake/libdiscord_config.h.in example_bots/example-hash.c)
 add_executable(example-bot-hash ${BOT_HASH_SOURCE})
 target_link_libraries(example-bot-hash discord)
 
-## Tests
-set(TESTS_JSON_SOURCE cmake/libdiscord_config.h.in tests/tests-json.c)
-add_executable(tests-json ${TESTS_JSON_SOURCE})
-target_link_libraries(tests-json discord)

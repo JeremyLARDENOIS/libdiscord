@@ -1,7 +1,7 @@
 //
 // Created by dxing97 on 11/11/17.
 //
-#include "libdiscord.h"
+#include <libdiscord/libdiscord.h>
 
 /*
  * This bot will respond to every "ayy" with "lmao", or any other trigger-response pair you want
@@ -9,7 +9,7 @@
 
 #include <getopt.h>
 #include <signal.h>
-#include <REST.h>
+#include <libdiscord/REST.h>
 
 static int bot_exit = 0; //0: no exit, 1: exit
 static int bot_state = 0; //0: not connected/disconnected, 1: connect initiated

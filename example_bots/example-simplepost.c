@@ -4,7 +4,7 @@
 
 #include <getopt.h>
 
-#include <libdiscord.h>
+#include <libdiscord/libdiscord.h>
 
 void print_help(char *executable_name) {
     printf("libdiscord message posting test bot\n"

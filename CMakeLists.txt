@@ -44,7 +44,7 @@ configure_file(
 ## Targets
 
 ## Library
-add_library(discord SHARED lib/libdiscord.c lib/REST.c lib/log.c lib/json.c )
+add_library(discord SHARED src/libdiscord.c src/REST.c src/log.c src/json.c )
 
 target_link_libraries(discord websockets jansson curl crypto )
 
